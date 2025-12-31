@@ -1,0 +1,13 @@
+{
+  "name": "inkblocks",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "pnpm -r --sort build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Michael Hernando",
+  "license": "MIT",
+  "packageManager": "pnpm@10.17.1"
+}

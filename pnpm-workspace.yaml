@@ -1,0 +1,9 @@
+packages:
+  - "packages/*"
+  - "examples/*"
+  - "examples/*/*"
+
+preferWorkspacePackages: true
+linkWorkspacePackages: true
+gitChecks: false
+storeDir: ./node_modules/.pnpm-store
