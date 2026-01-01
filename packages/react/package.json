@@ -1,8 +1,22 @@
 {
-  "name": "basic",
-  "private": true,
-  "version": "0.0.0",
+  "name": "@inkblocks/react",
+  "version": "0.1.0",
   "type": "module",
+  "types": "./types/index.d.ts",
+  "main": "./dist/inkblocks-react.cjs",
+  "module": "./dist/inkblocks-react.js",
+  "exports": {
+    ".": {
+      "types": "./types/index.d.ts",
+      "import": "./dist/inkblocks-react.js",
+      "require": "./dist/inkblocks-react.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "types",
+    "src"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
@@ -11,7 +25,7 @@
   },
   "dependencies": {
     "@inkblocks/core": "workspace:*",
-    "@inkblocks/react": "workspace:*"
+    "@lexical/react": "^0.39.0"
   },
   "peerDependencies": {
     "react": "^19.2.0",

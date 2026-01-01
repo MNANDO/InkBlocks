@@ -5,9 +5,10 @@
   "main": "index.js",
   "scripts": {
     "build": "pnpm -r --sort build",
+    "dev:basic": "pnpm --filter ./examples/basic dev",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Michael Hernando",
+  "author": "Mike Nando",
   "license": "MIT",
   "packageManager": "pnpm@10.17.1"
 }
