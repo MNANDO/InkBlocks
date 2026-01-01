@@ -1,12 +1,9 @@
-import { helloWorld } from '@inkblocks/core';
 import { InkBlocksEditorView } from '@inkblocks/react';
 
 function App() {
-	const message = helloWorld;
-
 	return (
-		<div>
-			<p>{message}</p>
+		<div className="bg-amber-50">
+			<p>test</p>
 			<InkBlocksEditorView />
 		</div>
 	);

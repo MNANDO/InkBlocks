@@ -5,12 +5,16 @@
   "types": "./types/index.d.ts",
   "main": "./dist/inkblocks-react.cjs",
   "module": "./dist/inkblocks-react.js",
+  "sideEffects": [
+    "**/*.css"
+  ],
   "exports": {
     ".": {
       "types": "./types/index.d.ts",
       "import": "./dist/inkblocks-react.js",
       "require": "./dist/inkblocks-react.cjs"
-    }
+    },
+    "./style.css": "./dist/style.css"
   },
   "files": [
     "dist",
@@ -19,7 +23,8 @@
   ],
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build:css": "tailwindcss -c tailwind.config.ts -i ./src/style.css -o ./dist/style.css --minify",
+    "build": "tsc && vite build && pnpm run build:css",
     "lint": "eslint .",
     "preview": "vite preview"
   },
@@ -33,14 +38,18 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
+    "@tailwindcss/cli": "^4.1.18",
     "@types/node": "^24.10.1",
     "@types/react": "^19.2.5",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^5.1.1",
+    "autoprefixer": "^10.4.23",
     "eslint": "^9.39.1",
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.24",
     "globals": "^16.5.0",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4.1.18",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.46.4",
     "vite": "^7.2.4"
