@@ -1,4 +1,3 @@
-// vite.config.ts
 import { defineConfig } from 'vite';
 import pkg from './package.json';
 import { fileURLToPath } from 'node:url';
@@ -21,11 +20,8 @@ export default defineConfig({
 			external: [
 				...Object.keys(pkg.dependencies ?? {}),
 				...Object.keys(
-					(
-						pkg as unknown as {
-							peerDependencies?: Record<string, string>;
-						}
-					).peerDependencies ?? {}
+					(pkg as { peerDependencies?: Record<string, string> })
+						.peerDependencies ?? {}
 				),
 			],
 			output: {

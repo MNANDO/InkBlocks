@@ -3,26 +3,31 @@
   "version": "0.1.0",
   "description": "Core utilities and functionality.",
   "type": "module",
+  "sideEffects": false,
   "source": "src/index.ts",
-  "types": "./types/src/index.d.ts",
+  "types": "./types/index.d.ts",
   "main": "./dist/inkblocks.cjs",
   "module": "./dist/inkblocks.js",
   "exports": {
     ".": {
-      "types": "./types/src/index.d.ts",
+      "types": "./types/index.d.ts",
       "import": "./dist/inkblocks.js",
       "require": "./dist/inkblocks.cjs"
     }
   },
+  "files": [
+    "dist",
+    "types",
+    "src"
+  ],
   "scripts": {
+    "clean": "rm -rf dist types node_modules/.tmp",
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build:types": "tsc -p tsconfig.build.json",
+    "build": "pnpm run clean && pnpm run build:types && vite build",
     "preview": "vite preview",
     "lint": "eslint src --max-warnings 0"
   },
-  "keywords": [],
-  "author": "Michael Hernando",
-  "license": "ISC",
   "devDependencies": {
     "typescript": "^5.9.3",
     "vite": "^7.3.0"

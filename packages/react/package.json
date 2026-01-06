@@ -23,8 +23,9 @@
   ],
   "scripts": {
     "dev": "vite",
+    "build:types": "tsc -p tsconfig.build.json",
     "build:css": "tailwindcss -c tailwind.config.ts -i ./src/style.css -o ./dist/style.css --minify",
-    "build": "tsc && vite build && pnpm run build:css",
+    "build": "pnpm run build:types && vite build && pnpm run build:css",
     "lint": "eslint .",
     "preview": "vite preview"
   },

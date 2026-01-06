@@ -1,10 +1,14 @@
-import { InkBlocksEditorView } from '@inkblocks/react';
+import {
+	InkBlocksEditorView,
+	useCreateInkBlocksEditor,
+} from '@inkblocks/react';
 
 function App() {
+	const editor = useCreateInkBlocksEditor();
+
 	return (
 		<div className="bg-amber-50">
-			<p>test</p>
-			<InkBlocksEditorView />
+			<InkBlocksEditorView editor={editor} />
 		</div>
 	);
 }
