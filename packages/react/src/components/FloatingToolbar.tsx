@@ -1,20 +1,13 @@
-import type { JSX } from 'react';
-
-import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { mergeRegister } from '@lexical/utils';
 import {
 	$getSelection,
-	$isParagraphNode,
-	$isRangeSelection,
-	$isTextNode,
 	COMMAND_PRIORITY_LOW,
 	FORMAT_TEXT_COMMAND,
 	getDOMSelection,
 	LexicalEditor,
 	SELECTION_CHANGE_COMMAND,
 } from 'lexical';
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { createPortal } from 'react-dom';
+import { JSX, useCallback, useEffect, useRef } from 'react';
 
 import {
 	Bold,
@@ -28,57 +21,10 @@ import {
 	CaseSensitive,
 } from 'lucide-react';
 
-import {
-	getDOMRangeRect,
-	getSelectedNode,
-	setFloatingElemPosition,
-} from '../utils';
+import { getDOMRangeRect, setFloatingElemPosition } from '../utils';
+import ToolbarButton from './ToolbarButton';
 
-type ToolbarButtonProps = {
-	active?: boolean;
-	spaced?: boolean;
-	title: string;
-	ariaLabel: string;
-	onClick: () => void;
-	children: JSX.Element;
-};
-
-function ToolbarButton({
-	active,
-	spaced,
-	title,
-	ariaLabel,
-	onClick,
-	children,
-}: ToolbarButtonProps): JSX.Element {
-	return (
-		<button
-			type="button"
-			onClick={onClick}
-			title={title}
-			aria-label={ariaLabel}
-			className={[
-				'inline-flex items-center rounded-[10px] bg-transparent p-2 align-middle',
-				spaced ? 'mr-0.5' : '',
-				'cursor-pointer hover:bg-[#eee]',
-				active ? 'bg-[rgba(223,232,250,0.3)]' : '',
-			]
-				.filter(Boolean)
-				.join(' ')}
-		>
-			<span
-				className={[
-					'inline-flex h-4.5 w-4.5 items-center justify-center',
-					active ? 'opacity-100' : 'opacity-60',
-				].join(' ')}
-			>
-				{children}
-			</span>
-		</button>
-	);
-}
-
-function TextFormatFloatingToolbar({
+export default function FloatingToolbar({
 	editor,
 	anchorElem,
 	isBold,
@@ -355,115 +301,4 @@ function TextFormatFloatingToolbar({
 			)}
 		</div>
 	);
-}
-
-function useFloatingTextFormatToolbar(
-	editor: LexicalEditor,
-	anchorElem: HTMLElement
-): JSX.Element | null {
-	const [isText, setIsText] = useState(false);
-
-	const [isBold, setIsBold] = useState(false);
-	const [isItalic, setIsItalic] = useState(false);
-	const [isUnderline, setIsUnderline] = useState(false);
-	const [isUppercase, setIsUppercase] = useState(false);
-	const [isLowercase, setIsLowercase] = useState(false);
-	const [isCapitalize, setIsCapitalize] = useState(false);
-	const [isStrikethrough, setIsStrikethrough] = useState(false);
-	const [isSubscript, setIsSubscript] = useState(false);
-	const [isSuperscript, setIsSuperscript] = useState(false);
-
-	const updatePopup = useCallback(() => {
-		editor.getEditorState().read(() => {
-			// Do not pop up the floating toolbar when using IME input
-			if (editor.isComposing()) return;
-
-			const selection = $getSelection();
-			const nativeSelection = getDOMSelection(editor._window);
-			const rootElement = editor.getRootElement();
-
-			if (
-				nativeSelection !== null &&
-				(!$isRangeSelection(selection) ||
-					rootElement === null ||
-					!rootElement.contains(nativeSelection.anchorNode))
-			) {
-				setIsText(false);
-				return;
-			}
-
-			if (!$isRangeSelection(selection)) return;
-
-			const node = getSelectedNode(selection);
-
-			setIsBold(selection.hasFormat('bold'));
-			setIsItalic(selection.hasFormat('italic'));
-			setIsUnderline(selection.hasFormat('underline'));
-			setIsUppercase(selection.hasFormat('uppercase'));
-			setIsLowercase(selection.hasFormat('lowercase'));
-			setIsCapitalize(selection.hasFormat('capitalize'));
-			setIsStrikethrough(selection.hasFormat('strikethrough'));
-			setIsSubscript(selection.hasFormat('subscript'));
-			setIsSuperscript(selection.hasFormat('superscript'));
-
-			if (selection.getTextContent() !== '') {
-				setIsText($isTextNode(node) || $isParagraphNode(node));
-			} else {
-				setIsText(false);
-			}
-
-			const rawTextContent = selection
-				.getTextContent()
-				.replace(/\n/g, '');
-			if (!selection.isCollapsed() && rawTextContent === '') {
-				setIsText(false);
-			}
-		});
-	}, [editor]);
-
-	useEffect(() => {
-		document.addEventListener('selectionchange', updatePopup);
-		return () => {
-			document.removeEventListener('selectionchange', updatePopup);
-		};
-	}, [updatePopup]);
-
-	useEffect(() => {
-		return mergeRegister(
-			editor.registerUpdateListener(() => updatePopup()),
-			editor.registerRootListener(() => {
-				if (editor.getRootElement() === null) {
-					setIsText(false);
-				}
-			})
-		);
-	}, [editor, updatePopup]);
-
-	if (!isText) return null;
-
-	return createPortal(
-		<TextFormatFloatingToolbar
-			editor={editor}
-			anchorElem={anchorElem}
-			isBold={isBold}
-			isItalic={isItalic}
-			isUnderline={isUnderline}
-			isUppercase={isUppercase}
-			isLowercase={isLowercase}
-			isCapitalize={isCapitalize}
-			isStrikethrough={isStrikethrough}
-			isSubscript={isSubscript}
-			isSuperscript={isSuperscript}
-		/>,
-		anchorElem
-	);
-}
-
-export default function TextFormatToolbarPlugin({
-	anchorElem = document.body,
-}: {
-	anchorElem?: HTMLElement;
-}): JSX.Element | null {
-	const [editor] = useLexicalComposerContext();
-	return useFloatingTextFormatToolbar(editor, anchorElem);
 }

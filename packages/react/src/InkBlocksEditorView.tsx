@@ -5,12 +5,13 @@ import { ContentEditable } from '@lexical/react/LexicalContentEditable';
 import { LexicalErrorBoundary } from '@lexical/react/LexicalErrorBoundary';
 import { LexicalExtensionComposer } from '@lexical/react/LexicalExtensionComposer';
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
-import TextFormatToolbarPlugin from './plugins/TextFormatToolbarPlugin';
 import { useEffect, useState } from 'react';
 import { CAN_USE_DOM } from '@lexical/utils';
+import FloatingToolbarPlugin from './plugins/FloatingToolbarPlugin';
 
 export type InkBlocksEditorViewProps = {
 	editor: InkBlocksEditor;
+	showFloatingToolbar?: boolean;
 	className?: string;
 };
 
@@ -69,7 +70,7 @@ function InkBlocksEditorView(props: InkBlocksEditorViewProps) {
 					/>
 					{floatingAnchorElem && !isSmallWidthViewport && (
 						<>
-							<TextFormatToolbarPlugin
+							<FloatingToolbarPlugin
 								anchorElem={floatingAnchorElem}
 							/>
 						</>
