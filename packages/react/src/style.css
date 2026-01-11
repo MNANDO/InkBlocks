@@ -5,6 +5,12 @@
     position: relative;
     line-height: 1.7;
     font-weight: 400;
+
+    /* Defaults so marker styling never goes "invisible" */
+    --listitem-marker-color: #111;
+    --listitem-marker-font-family: inherit;
+    --listitem-marker-font-size: 1em;
+    --listitem-marker-background-color: transparent;
 }
 
 .ib-editor-shell .ib-editor-container {
@@ -29,14 +35,13 @@
     max-width: 100%;
     position: relative;
     resize: vertical;
-    z-index: -1;
+    z-index: 0;
 }
 
 .ib-editor-input {
     min-height: 150px;
     resize: none;
     font-size: 15px;
-    caret-color: rgb(5, 5, 5);
     position: relative;
     tab-size: 1;
     outline: 0;
@@ -56,3 +61,373 @@
     display: inline-block;
     pointer-events: none;
 }
+
+.InkBlocksTheme__paragraph {
+    margin: 0;
+    position: relative;
+}
+
+.InkBlocksTheme__quote {
+    margin: 0;
+    margin-left: 20px;
+    margin-bottom: 10px;
+    font-size: 15px;
+    color: rgb(101, 103, 107);
+    border-left-color: rgb(206, 208, 212);
+    border-left-width: 4px;
+    border-left-style: solid;
+    padding-left: 16px;
+}
+
+.InkBlocksTheme__h1 {
+    font-size: 24px;
+    color: rgb(5, 5, 5);
+    font-weight: 400;
+    margin: 0;
+}
+
+.InkBlocksTheme__h2 {
+    font-size: 15px;
+    color: rgb(101, 103, 107);
+    font-weight: 700;
+    margin: 0;
+    text-transform: uppercase;
+}
+
+.InkBlocksTheme__h3 {
+    font-size: 12px;
+    margin: 0;
+    text-transform: uppercase;
+}
+
+.InkBlocksTheme__indent {
+    --lexical-indent-base-value: 40px;
+}
+
+.InkBlocksTheme__textBold {
+    font-weight: bold;
+}
+
+.InkBlocksTheme__paragraph mark {
+    background-color: unset;
+}
+
+.InkBlocksTheme__textHighlight {
+    background: rgba(255, 212, 0, 0.14);
+    border-bottom: 2px solid rgba(255, 212, 0, 0.3);
+}
+
+.InkBlocksTheme__textItalic {
+    font-style: italic;
+}
+
+.InkBlocksTheme__textUnderline {
+    text-decoration: underline;
+}
+
+.InkBlocksTheme__textStrikethrough {
+    text-decoration: line-through;
+}
+
+.InkBlocksTheme__textUnderlineStrikethrough {
+    text-decoration: underline line-through;
+}
+
+.InkBlocksTheme__tabNode {
+    position: relative;
+    text-decoration: none;
+}
+
+.InkBlocksTheme__tabNode.InkBlocksTheme__textUnderline::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0.15em;
+    border-bottom: 0.1em solid currentColor;
+}
+
+.InkBlocksTheme__tabNode.InkBlocksTheme__textStrikethrough::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0.69em;
+    border-top: 0.1em solid currentColor;
+}
+
+.InkBlocksTheme__tabNode.InkBlocksTheme__textUnderlineStrikethrough::before,
+.InkBlocksTheme__tabNode.InkBlocksTheme__textUnderlineStrikethrough::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+}
+
+.InkBlocksTheme__tabNode.InkBlocksTheme__textUnderlineStrikethrough::before {
+    top: 0.69em;
+    border-top: 0.1em solid currentColor;
+}
+
+.InkBlocksTheme__tabNode.InkBlocksTheme__textUnderlineStrikethrough::after {
+    bottom: 0.05em;
+    border-bottom: 0.1em solid currentColor;
+}
+
+.InkBlocksTheme__textSubscript {
+    font-size: 0.8em;
+    vertical-align: sub !important;
+}
+
+.InkBlocksTheme__textSuperscript {
+    font-size: 0.8em;
+    vertical-align: super;
+}
+
+.InkBlocksTheme__textCode {
+    background-color: rgb(240, 242, 245);
+    padding: 1px 0.25rem;
+    font-family: Menlo, Consolas, Monaco, monospace;
+    font-size: 94%;
+}
+
+.InkBlocksTheme__textLowercase {
+    text-transform: lowercase;
+}
+
+.InkBlocksTheme__textUppercase {
+    text-transform: uppercase;
+}
+
+.InkBlocksTheme__textCapitalize {
+    text-transform: capitalize;
+}
+
+.InkBlocksTheme__hashtag {
+    background-color: rgba(88, 144, 255, 0.15);
+    border-bottom: 1px solid rgba(88, 144, 255, 0.3);
+}
+
+.InkBlocksTheme__link {
+    color: rgb(33, 111, 219);
+    text-decoration: none;
+}
+
+.InkBlocksTheme__link:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.InkBlocksTheme__blockCursor {
+    display: block;
+    pointer-events: none;
+    position: absolute;
+}
+
+.InkBlocksTheme__blockCursor:after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: -2px;
+    width: 20px;
+    border-top: 1px solid black;
+    animation: CursorBlink 1.1s steps(2, start) infinite;
+}
+
+@keyframes CursorBlink {
+    to {
+        visibility: hidden;
+    }
+}
+
+.InkBlocksTheme__code {
+    background-color: rgb(240, 242, 245);
+    font-family: Menlo, Consolas, Monaco, monospace;
+    display: block;
+    padding: 8px 8px 8px 52px;
+    line-height: 1.53;
+    font-size: 13px;
+    margin: 0;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    overflow-x: auto;
+    position: relative;
+    tab-size: 2;
+}
+
+.InkBlocksTheme__code:before {
+    content: attr(data-gutter);
+    position: absolute;
+    background-color: #eee;
+    left: 0;
+    top: 0;
+    border-right: 1px solid #ccc;
+    padding: 8px;
+    color: #777;
+    white-space: pre-wrap;
+    text-align: right;
+    min-width: 25px;
+}
+
+/* ---------------------------- */
+/* LISTS (FIXED)                */
+/* ---------------------------- */
+
+.InkBlocksTheme__ul,
+.InkBlocksTheme__ol1,
+.InkBlocksTheme__ol2,
+.InkBlocksTheme__ol3,
+.InkBlocksTheme__ol4,
+.InkBlocksTheme__ol5 {
+    margin: 0;
+    padding-left: 1.5rem;
+    /* critical so markers are visible */
+    list-style-position: outside;
+}
+
+.InkBlocksTheme__ul {
+    list-style-type: disc;
+}
+
+.InkBlocksTheme__ol1 {
+    list-style-type: decimal;
+}
+
+.InkBlocksTheme__ol2 {
+    list-style-type: upper-alpha;
+}
+
+.InkBlocksTheme__ol3 {
+    list-style-type: lower-alpha;
+}
+
+.InkBlocksTheme__ol4 {
+    list-style-type: upper-roman;
+}
+
+.InkBlocksTheme__ol5 {
+    list-style-type: lower-roman;
+}
+
+.InkBlocksTheme__listItem {
+    margin: 0;
+    /* was 0 32px, which can also push markers weirdly */
+    font-family: var(--listitem-marker-font-family);
+    font-size: var(--listitem-marker-font-size);
+    background-color: var(--listitem-marker-background-color);
+}
+
+.InkBlocksTheme__listItem::marker {
+    color: var(--listitem-marker-color);
+    background-color: var(--listitem-marker-background-color);
+    font-family: var(--listitem-marker-font-family);
+    font-size: var(--listitem-marker-font-size);
+}
+
+.InkBlocksTheme__listItemChecked,
+.InkBlocksTheme__listItemUnchecked {
+    position: relative;
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+    padding-left: 1.5em;
+    padding-right: 1.5em;
+    list-style-type: none;
+    outline: none;
+    display: block;
+    min-height: 1.5em;
+}
+
+.InkBlocksTheme__listItemChecked>*,
+.InkBlocksTheme__listItemUnchecked>* {
+    margin-left: 0.01em;
+}
+
+.InkBlocksTheme__listItemUnchecked:before,
+.InkBlocksTheme__listItemChecked:before {
+    content: '\200B';
+    width: 0.9em;
+    height: 0.9em;
+    top: 50%;
+    left: 0;
+    cursor: pointer;
+    display: block;
+    background-size: cover;
+    position: absolute;
+    transform: translateY(-50%);
+}
+
+.InkBlocksTheme__listItemChecked {
+    text-decoration: line-through;
+}
+
+.InkBlocksTheme__listItemUnchecked:focus:before,
+.InkBlocksTheme__listItemChecked:focus:before {
+    box-shadow: 0 0 0 2px #a6cdfe;
+    border-radius: 2px;
+}
+
+.InkBlocksTheme__listItemUnchecked:before {
+    border: 1px solid #999;
+    border-radius: 2px;
+}
+
+.InkBlocksTheme__listItemChecked:before {
+    border: 1px solid rgb(61, 135, 245);
+    border-radius: 2px;
+    background-color: #3d87f5;
+    background-repeat: no-repeat;
+}
+
+.InkBlocksTheme__listItemChecked:after {
+    content: '';
+    cursor: pointer;
+    border-color: #fff;
+    border-style: solid;
+    position: absolute;
+    display: block;
+    top: 45%;
+    width: 0.2em;
+    left: 0.35em;
+    height: 0.4em;
+    transform: translateY(-50%) rotate(45deg);
+    border-width: 0 0.1em 0.1em 0;
+}
+
+.InkBlocksTheme__nestedListItem {
+    list-style-type: none;
+}
+
+.InkBlocksTheme__nestedListItem:before,
+.InkBlocksTheme__nestedListItem:after {
+    display: none;
+}
+
+/* ---------------------------- */
+/* HR                           */
+/* ---------------------------- */
+
+.InkBlocksTheme__hr {
+    padding: 2px 2px;
+    border: none;
+    margin: 1em 0;
+    cursor: pointer;
+}
+
+.InkBlocksTheme__hr:after {
+    content: '';
+    display: block;
+    height: 2px;
+    background-color: #ccc;
+    line-height: 2px;
+}
+
+.InkBlocksTheme__hr.InkBlocksTheme__hrSelected {
+    outline: 2px solid rgb(60, 132, 244);
+    user-select: none;
+}
+
+/* ---------------------------- */
+/* (rest of your file stays same) */
+/* If you need the table/token/context-menu sections preserved too,
+   keep them below unchanged from your original. */
+/* ---------------------------- */
