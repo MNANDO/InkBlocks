@@ -8,13 +8,14 @@ import FloatingToolbarPlugin from './plugins/FloatingToolbarPlugin';
 import { useMemo, useState } from 'react';
 import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
 import { defineExtension, EditorState, LexicalEditor } from 'lexical';
-import { HorizontalRuleExtension } from '@lexical/extension';
-import BlockPlugin from './plugins/BlockPlugin';
+import {
+	HorizontalRuleExtension,
+	TabIndentationExtension,
+} from '@lexical/extension';
 import InkBlocksNodes from './nodes/InkBlocksNodes';
 import theme from './InkBlocksTheme';
-import { ListPlugin } from '@lexical/react/LexicalListPlugin';
-import { CheckListPlugin } from '@lexical/react/LexicalCheckListPlugin';
-import { TabIndentationPlugin } from '@lexical/react/LexicalTabIndentationPlugin';
+import BlockPickerPlugin from './plugins/BlockPickerPlugin';
+import { CheckListExtension, ListExtension } from '@lexical/list';
 
 export type InkBlocksEditorViewProps = {
 	onChange?: (
@@ -44,7 +45,12 @@ function InkBlocksEditorView(props: InkBlocksEditorViewProps) {
 				name: 'InkBlocksEditor',
 				nodes: InkBlocksNodes,
 				theme: theme,
-				dependencies: [HorizontalRuleExtension],
+				dependencies: [
+					HorizontalRuleExtension,
+					ListExtension,
+					CheckListExtension,
+					TabIndentationExtension,
+				],
 			}),
 		[]
 	);
@@ -77,10 +83,7 @@ function InkBlocksEditorView(props: InkBlocksEditorViewProps) {
 						/>
 					)}
 					<OnChangePlugin onChange={onChange} />
-					<BlockPlugin />
-					<ListPlugin />
-					<CheckListPlugin />
-					<TabIndentationPlugin />
+					<BlockPickerPlugin />
 				</div>
 			</div>
 		</LexicalExtensionComposer>

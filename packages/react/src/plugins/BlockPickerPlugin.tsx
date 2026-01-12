@@ -82,7 +82,7 @@ export function BlockPickerMenuItem({
 			onClick={onClick}
 		>
 			{option.icon}
-			<span className="flex min-w-[150px] flex-1 leading-5">
+			<span className="flex min-w-37.5 flex-1 leading-5">
 				{option.title}
 			</span>
 		</li>
@@ -161,11 +161,11 @@ export function getBaseOptions(editor: LexicalEditor, showModal: ShowModal) {
 					undefined
 				),
 		}),
-		...(['left', 'center', 'right', 'justify'] as const).map(
+		...(['left', 'center', 'right'] as const).map(
 			(alignment) =>
 				new BlockPickerOption(`Align ${alignment}`, {
 					icon: <i className={`icon ${alignment}-align`} />,
-					keywords: ['align', 'justify', alignment],
+					keywords: ['align', alignment],
 					onSelect: () =>
 						editor.dispatchCommand(
 							FORMAT_ELEMENT_COMMAND,

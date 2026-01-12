@@ -59,14 +59,14 @@ function PortalImpl({
 
 	return (
 		<div
-			className="fixed inset-0 z-[100] flex items-center justify-center bg-zinc-900/60 p-4"
+			className="fixed inset-0 z-100 flex items-center justify-center bg-zinc-900/60 p-4"
 			role="dialog"
 			aria-modal="true"
 		>
 			<div
 				ref={modalRef}
 				tabIndex={-1}
-				className="relative flex min-h-[100px] w-full max-w-lg flex-col rounded-2xl bg-white p-5 shadow-[0_0_20px_0_rgba(0,0,0,0.35)] outline-none"
+				className="relative flex min-h-25 w-full max-w-lg flex-col rounded-2xl bg-white p-5 shadow-[0_0_20px_0_rgba(0,0,0,0.35)] outline-none"
 			>
 				<div className="flex items-start justify-between gap-4 border-b border-zinc-200 pb-3">
 					<h2 className="m-0 text-lg font-semibold text-zinc-800">

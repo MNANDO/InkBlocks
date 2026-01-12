@@ -9,17 +9,7 @@ import {
 } from 'lexical';
 import { JSX, useCallback, useEffect, useRef } from 'react';
 
-import {
-	Bold,
-	Italic,
-	Underline,
-	Strikethrough,
-	Subscript,
-	Superscript,
-	CaseUpper,
-	CaseLower,
-	CaseSensitive,
-} from 'lucide-react';
+import { Bold, Italic, Underline, Strikethrough } from 'lucide-react';
 
 import { getDOMRangeRect, setFloatingElemPosition } from '../utils';
 import ToolbarButton from './ToolbarButton';
@@ -30,12 +20,7 @@ export default function FloatingToolbar({
 	isBold,
 	isItalic,
 	isUnderline,
-	isUppercase,
-	isLowercase,
-	isCapitalize,
 	isStrikethrough,
-	isSubscript,
-	isSuperscript,
 }: {
 	editor: LexicalEditor;
 	anchorElem: HTMLElement;
@@ -221,81 +206,6 @@ export default function FloatingToolbar({
 						}
 					>
 						<Strikethrough className="h-4.5 w-4.5" />
-					</ToolbarButton>
-
-					<ToolbarButton
-						spaced
-						active={isSubscript}
-						title="Subscript"
-						ariaLabel="Format Subscript"
-						onClick={() =>
-							editor.dispatchCommand(
-								FORMAT_TEXT_COMMAND,
-								'subscript'
-							)
-						}
-					>
-						<Subscript className="h-4.5 w-4.5" />
-					</ToolbarButton>
-
-					<ToolbarButton
-						spaced
-						active={isSuperscript}
-						title="Superscript"
-						ariaLabel="Format Superscript"
-						onClick={() =>
-							editor.dispatchCommand(
-								FORMAT_TEXT_COMMAND,
-								'superscript'
-							)
-						}
-					>
-						<Superscript className="h-4.5 w-4.5" />
-					</ToolbarButton>
-
-					<ToolbarButton
-						spaced
-						active={isUppercase}
-						title="Uppercase"
-						ariaLabel="Format text to uppercase"
-						onClick={() =>
-							editor.dispatchCommand(
-								FORMAT_TEXT_COMMAND,
-								'uppercase'
-							)
-						}
-					>
-						<CaseUpper className="h-4.5 w-4.5" />
-					</ToolbarButton>
-
-					<ToolbarButton
-						spaced
-						active={isLowercase}
-						title="Lowercase"
-						ariaLabel="Format text to lowercase"
-						onClick={() =>
-							editor.dispatchCommand(
-								FORMAT_TEXT_COMMAND,
-								'lowercase'
-							)
-						}
-					>
-						<CaseLower className="h-4.5 w-4.5" />
-					</ToolbarButton>
-
-					<ToolbarButton
-						spaced
-						active={isCapitalize}
-						title="Capitalize"
-						ariaLabel="Format text to capitalize"
-						onClick={() =>
-							editor.dispatchCommand(
-								FORMAT_TEXT_COMMAND,
-								'capitalize'
-							)
-						}
-					>
-						<CaseSensitive className="h-4.5 w-4.5" />
 					</ToolbarButton>
 				</>
 			)}
