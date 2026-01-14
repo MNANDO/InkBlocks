@@ -5,19 +5,13 @@ import { LexicalErrorBoundary } from '@lexical/react/LexicalErrorBoundary';
 import { LexicalExtensionComposer } from '@lexical/react/LexicalExtensionComposer';
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
 import FloatingToolbarPlugin from './plugins/FloatingToolbarPlugin';
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
-import { defineExtension, EditorState, LexicalEditor } from 'lexical';
-import {
-	HorizontalRuleExtension,
-	TabIndentationExtension,
-} from '@lexical/extension';
-import InkBlocksNodes from './nodes/InkBlocksNodes';
-import theme from './InkBlocksTheme';
-import BlockPickerPlugin from './plugins/BlockPickerPlugin';
-import { CheckListExtension, ListExtension } from '@lexical/list';
+import { EditorState, LexicalEditor } from 'lexical';
+import InkBlocksReactEditor from './InkBlocksReactEditor';
 
 export type InkBlocksEditorViewProps = {
+	editor: InkBlocksReactEditor;
 	onChange?: (
 		editorState: EditorState,
 		editor: LexicalEditor,
@@ -39,25 +33,9 @@ function InkBlocksEditorView(props: InkBlocksEditorViewProps) {
 		}
 	};
 
-	const inkBlocksLexicalExtension = useMemo(
-		() =>
-			defineExtension({
-				name: 'InkBlocksEditor',
-				nodes: InkBlocksNodes,
-				theme: theme,
-				dependencies: [
-					HorizontalRuleExtension,
-					ListExtension,
-					CheckListExtension,
-					TabIndentationExtension,
-				],
-			}),
-		[]
-	);
-
 	return (
 		<LexicalExtensionComposer
-			extension={inkBlocksLexicalExtension}
+			extension={props.editor.lexicalExtension}
 			contentEditable={null}
 		>
 			<div className={`ib-editor-shell ${className}`}>
@@ -83,7 +61,6 @@ function InkBlocksEditorView(props: InkBlocksEditorViewProps) {
 						/>
 					)}
 					<OnChangePlugin onChange={onChange} />
-					<BlockPickerPlugin />
 				</div>
 			</div>
 		</LexicalExtensionComposer>

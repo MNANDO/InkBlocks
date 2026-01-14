@@ -1,1 +1,2 @@
-export { InkBlocksEditor } from './InkBlocksEditor';
+export { createInkBlocksEditor } from './createInkBlocksEditor';
+export { InkBlocksCoreExtension } from './InkBlocksCoreExtension';

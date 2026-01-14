@@ -1,9 +1,11 @@
-import { InkBlocksEditorView } from '@inkblocks/react';
+import { InkBlocksEditorView, useCreateInkBlocks } from '@inkblocks/react';
 
 function App() {
+	const editor = useCreateInkBlocks();
+
 	return (
 		<div className="bg-amber-900">
-			<InkBlocksEditorView className="mx-auto" />
+			<InkBlocksEditorView editor={editor} className="mx-auto" />
 		</div>
 	);
 }

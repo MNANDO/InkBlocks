@@ -1,2 +1,3 @@
 export { default as InkBlocksEditorView } from './InkBlocksEditorView';
-export { useCreateInkBlocksEditor } from './hooks/useCreateInkBlocksEditor';
+export { useCreateInkBlocks } from './hooks/useCreateInkBlocks';
+export { default as InkBlocksReactEditor } from './InkBlocksReactEditor';
