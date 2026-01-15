@@ -1,5 +1,7 @@
 import { LexicalExtension } from 'lexical';
 import { createInkBlocksReactExtension } from './extensions/InkBlocksReactExtension';
+import { BlockDefinition } from './blocks/types';
+import { baseBlocks } from './blocks/baseBlocks';
 
 export default class InkBlocksReactEditor {
 	private _lexicalExtension: LexicalExtension<
@@ -9,8 +11,11 @@ export default class InkBlocksReactEditor {
 		unknown
 	>;
 
+	blocks: BlockDefinition[];
+
 	constructor() {
-		this._lexicalExtension = createInkBlocksReactExtension();
+		this.blocks = baseBlocks;
+		this._lexicalExtension = createInkBlocksReactExtension(this.blocks);
 	}
 
 	get lexicalExtension() {

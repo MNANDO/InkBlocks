@@ -5,8 +5,9 @@ import { ReactExtension } from '@lexical/react/ReactExtension';
 import { InkBlocksCoreExtension } from '@inkblocks/core';
 import BlockPickerPlugin from '../plugins/BlockPickerPlugin';
 import theme from '../InkBlocksTheme';
+import { BlockDefinition } from '../blocks/types';
 
-export function createInkBlocksReactExtension() {
+export function createInkBlocksReactExtension(blocks: BlockDefinition[]) {
 	return defineExtension({
 		name: 'InkBlocksReactExtension',
 		theme,
@@ -14,7 +15,12 @@ export function createInkBlocksReactExtension() {
 			InkBlocksCoreExtension,
 			configExtension(ReactExtension, {
 				contentEditable: null,
-				decorators: [<BlockPickerPlugin key="block-picker-plugin" />],
+				decorators: [
+					<BlockPickerPlugin
+						blocks={blocks}
+						key="block-picker-plugin"
+					/>,
+				],
 			}),
 		],
 	});
