@@ -1,9 +1,15 @@
 packages:
-  - "packages/*"
-  - "examples/*"
-  - "examples/*/*"
+  - packages/*
+  - examples/*
+  - examples/*/*
+
+gitChecks: false
+
+linkWorkspacePackages: true
+
+onlyBuiltDependencies:
+  - nx
 
 preferWorkspacePackages: true
-linkWorkspacePackages: true
-gitChecks: false
+
 storeDir: ./node_modules/.pnpm-store

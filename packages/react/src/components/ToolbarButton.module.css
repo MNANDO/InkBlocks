@@ -1,0 +1,38 @@
+.button {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 10px;
+    background: transparent;
+    padding: 0.5rem;
+    vertical-align: middle;
+    cursor: pointer;
+    border: none;
+}
+
+.button:hover {
+    background: #eee;
+}
+
+.spaced {
+    margin-right: 0.125rem;
+}
+
+.active {
+    background: rgba(223, 232, 250, 0.3);
+}
+
+.iconWrap {
+    display: inline-flex;
+    height: 1.125rem;
+    width: 1.125rem;
+    align-items: center;
+    justify-content: center;
+}
+
+.iconActive {
+    opacity: 1;
+}
+
+.iconInactive {
+    opacity: 0.6;
+}

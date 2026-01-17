@@ -1,4 +1,5 @@
-import { JSX } from 'react';
+import type { JSX } from 'react';
+import styles from './ToolbarButton.module.css';
 
 type ToolbarButtonProps = {
 	active?: boolean;
@@ -24,19 +25,20 @@ export default function ToolbarButton({
 			title={title}
 			aria-label={ariaLabel}
 			className={[
-				'inline-flex items-center rounded-[10px] bg-transparent p-2 align-middle',
-				spaced ? 'mr-0.5' : '',
-				'cursor-pointer hover:bg-[#eee]',
-				active ? 'bg-[rgba(223,232,250,0.3)]' : '',
+				styles.button,
+				spaced ? styles.spaced : '',
+				active ? styles.active : '',
 			]
 				.filter(Boolean)
 				.join(' ')}
 		>
 			<span
 				className={[
-					'inline-flex h-4.5 w-4.5 items-center justify-center',
-					active ? 'opacity-100' : 'opacity-60',
-				].join(' ')}
+					styles.iconWrap,
+					active ? styles.iconActive : styles.iconInactive,
+				]
+					.filter(Boolean)
+					.join(' ')}
 			>
 				{children}
 			</span>

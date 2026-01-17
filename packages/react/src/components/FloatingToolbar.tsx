@@ -13,6 +13,7 @@ import { Bold, Italic, Underline, Strikethrough } from 'lucide-react';
 
 import { getDOMRangeRect, setFloatingElemPosition } from '../utils';
 import ToolbarButton from './ToolbarButton';
+import styles from './FloatingToolbar.module.css';
 
 export default function FloatingToolbar({
 	editor,
@@ -141,14 +142,7 @@ export default function FloatingToolbar({
 	}, [editor, $updateTextFormatFloatingToolbar]);
 
 	return (
-		<div
-			ref={popupCharStylesEditorRef}
-			className={[
-				'absolute left-0 top-0 z-10 flex h-8.75 items-center',
-				'rounded-lg bg-white p-1 shadow-[0px_5px_10px_rgba(0,0,0,0.3)]',
-				'opacity-0 transition-opacity duration-500 will-change-transform',
-			].join(' ')}
-		>
+		<div ref={popupCharStylesEditorRef} className={styles.floatingToolbar}>
 			{editor.isEditable() && (
 				<>
 					<ToolbarButton
@@ -160,7 +154,7 @@ export default function FloatingToolbar({
 							editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'bold')
 						}
 					>
-						<Bold className="h-4.5 w-4.5" />
+						<Bold className={styles.icon} />
 					</ToolbarButton>
 
 					<ToolbarButton
@@ -175,7 +169,7 @@ export default function FloatingToolbar({
 							)
 						}
 					>
-						<Italic className="h-4.5 w-4.5" />
+						<Italic className={styles.icon} />
 					</ToolbarButton>
 
 					<ToolbarButton
@@ -190,7 +184,7 @@ export default function FloatingToolbar({
 							)
 						}
 					>
-						<Underline className="h-4.5 w-4.5" />
+						<Underline className={styles.icon} />
 					</ToolbarButton>
 
 					<ToolbarButton
@@ -205,7 +199,7 @@ export default function FloatingToolbar({
 							)
 						}
 					>
-						<Strikethrough className="h-4.5 w-4.5" />
+						<Strikethrough className={styles.icon} />
 					</ToolbarButton>
 				</>
 			)}

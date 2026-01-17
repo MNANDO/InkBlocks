@@ -1,0 +1,21 @@
+.menu {
+    position: relative;
+    width: 12.5rem;
+    border-radius: 0.5rem;
+    background: #ffffff;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
+}
+
+.list {
+    margin: 0;
+    max-height: 12.5rem;
+    list-style: none;
+    overflow-y: auto;
+    border-radius: 0.5rem;
+    padding: 0;
+    scrollbar-width: none;
+}
+
+.list::-webkit-scrollbar {
+    display: none;
+}

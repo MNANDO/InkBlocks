@@ -1,0 +1,57 @@
+.item {
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    display: flex;
+    cursor: pointer;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+    border-radius: 0.5rem;
+    background: #ffffff;
+    padding: 0.5rem;
+    font-size: 15px;
+    line-height: 1rem;
+    color: #09090b;
+    outline: none;
+}
+
+.item:hover {
+    background: #f4f4f5;
+}
+
+.itemSelected {
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    display: flex;
+    cursor: pointer;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+    border-radius: 0.5rem;
+    background: #f4f4f5;
+    padding: 0.5rem;
+    font-size: 15px;
+    line-height: 1rem;
+    color: #09090b;
+    outline: none;
+}
+
+.icon {
+    display: flex;
+    height: 1rem;
+    width: 1rem;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon>svg {
+    height: 1.25rem;
+    width: 1rem;
+}
+
+.title {
+    display: flex;
+    min-width: 9.375rem;
+    flex: 1 1 0%;
+    line-height: 1.25rem;
+}

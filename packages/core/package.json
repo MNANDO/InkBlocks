@@ -13,6 +13,11 @@
       "types": "./types/index.d.ts",
       "import": "./dist/inkblocks.js",
       "require": "./dist/inkblocks.cjs"
+    },
+    "./style.css": {
+      "import": "./dist/style.css",
+      "require": "./dist/style.css",
+      "style": "./dist/style.css"
     }
   },
   "files": [
@@ -21,11 +26,9 @@
     "src"
   ],
   "scripts": {
-    "clean": "rm -rf dist types node_modules/.tmp",
     "dev": "vite",
-    "build:types": "tsc -p tsconfig.build.json",
-    "build": "pnpm run clean && pnpm run build:types && vite build",
-    "preview": "vite preview",
+    "build": "tsc && vite build",
+    "preview": "nx vite:preview",
     "lint": "eslint src --max-warnings 0"
   },
   "devDependencies": {

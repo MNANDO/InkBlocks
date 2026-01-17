@@ -13,6 +13,7 @@ export default defineConfig({
 			entry: path.resolve(__dirname, 'src/index.ts'),
 			name: 'inkblocks',
 			formats: ['es', 'cjs'],
+			cssFileName: 'style',
 			fileName: (format) =>
 				format === 'es' ? 'inkblocks.js' : 'inkblocks.cjs',
 		},

@@ -18,6 +18,7 @@ export type InkBlocksEditorViewProps = {
 		tags: Set<string>
 	) => void;
 	showFloatingToolbar?: boolean;
+	placeholder?: string;
 	className?: string;
 };
 
@@ -32,6 +33,9 @@ function InkBlocksEditorView(props: InkBlocksEditorViewProps) {
 			setFloatingAnchorElem(_floatingAnchorElem);
 		}
 	};
+
+	const editorPlaceholder =
+		props.placeholder ?? "Enter text or type '/' for ";
 
 	return (
 		<LexicalExtensionComposer
@@ -50,7 +54,7 @@ function InkBlocksEditorView(props: InkBlocksEditorViewProps) {
 						}
 						placeholder={
 							<div className="ib-editor-placeholder">
-								Enter some text...
+								{editorPlaceholder}
 							</div>
 						}
 						ErrorBoundary={LexicalErrorBoundary}

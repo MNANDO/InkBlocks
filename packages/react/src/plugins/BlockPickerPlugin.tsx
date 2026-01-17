@@ -14,6 +14,7 @@ import ModalHost from '../components/ModalHost';
 import { BlockPickerOption } from './BlockPickerOption';
 import { BlockPickerMenuItem } from '../components/BlockPickerMenuItem';
 import { BlockDefinition } from '../blocks/types';
+import styles from './BlockPickerPlugin.module.css';
 
 export type ShowModal = ReturnType<typeof useModal>['showModal'];
 
@@ -53,7 +54,7 @@ export default function BlockPickerPlugin({
 				keywords.some((keyword) => regex.test(keyword))
 			);
 		});
-	}, [editor, queryString, showModal]);
+	}, [blocks, queryString]);
 
 	const onSelectOption = useCallback(
 		(
@@ -93,8 +94,8 @@ export default function BlockPickerPlugin({
 				) =>
 					anchorElementRef.current && options.length
 						? ReactDOM.createPortal(
-								<div className="relative w-50 rounded-lg bg-white shadow-[0px_5px_10px_rgba(0,0,0,0.3)]">
-									<ul className="m-0 max-h-50 list-none overflow-y-auto rounded-lg p-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+								<div className={styles.menu}>
+									<ul className={styles.list}>
 										{options.map((option, i: number) => (
 											<BlockPickerMenuItem
 												index={i}

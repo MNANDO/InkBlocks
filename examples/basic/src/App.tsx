@@ -4,7 +4,7 @@ function App() {
 	const editor = useCreateInkBlocks();
 
 	return (
-		<div className="bg-amber-900">
+		<div>
 			<InkBlocksEditorView editor={editor} className="mx-auto" />
 		</div>
 	);

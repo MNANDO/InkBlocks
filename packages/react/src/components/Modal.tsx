@@ -4,6 +4,7 @@ import type { JSX, ReactNode } from 'react';
 import { useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { isDOMNode } from 'lexical';
+import styles from './Modal.module.css';
 
 type PortalImplProps = {
 	children: ReactNode;
@@ -58,32 +59,22 @@ function PortalImpl({
 	}, [closeOnClickOutside, onClose]);
 
 	return (
-		<div
-			className="fixed inset-0 z-100 flex items-center justify-center bg-zinc-900/60 p-4"
-			role="dialog"
-			aria-modal="true"
-		>
-			<div
-				ref={modalRef}
-				tabIndex={-1}
-				className="relative flex min-h-25 w-full max-w-lg flex-col rounded-2xl bg-white p-5 shadow-[0_0_20px_0_rgba(0,0,0,0.35)] outline-none"
-			>
-				<div className="flex items-start justify-between gap-4 border-b border-zinc-200 pb-3">
-					<h2 className="m-0 text-lg font-semibold text-zinc-800">
-						{title}
-					</h2>
+		<div className={styles.fixedOverlay} role="dialog" aria-modal="true">
+			<div ref={modalRef} tabIndex={-1} className={styles.modal}>
+				<div className={styles.header}>
+					<h2 className={styles.title}>{title}</h2>
 
 					<button
 						type="button"
 						aria-label="Close modal"
 						onClick={onClose}
-						className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-zinc-100 text-zinc-700 transition hover:bg-zinc-200"
+						className={styles.closeButton}
 					>
-						<span className="text-sm leading-none">✕</span>
+						<span className={styles.closeIcon}>✕</span>
 					</button>
 				</div>
 
-				<div className="pt-4">{children}</div>
+				<div className={styles.body}>{children}</div>
 			</div>
 		</div>
 	);

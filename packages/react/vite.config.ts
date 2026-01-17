@@ -25,6 +25,7 @@ export default defineConfig((conf) => ({
 			},
 			name: 'inkblocks-react',
 			formats: ['es', 'cjs'],
+			cssFileName: 'style',
 			fileName: (format, entryName) =>
 				format === 'es' ? `${entryName}.js` : `${entryName}.cjs`,
 		},
