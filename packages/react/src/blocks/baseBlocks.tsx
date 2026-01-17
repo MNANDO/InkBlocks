@@ -1,5 +1,3 @@
-import { BlockDefinition } from './types';
-
 import {
 	$createParagraphNode,
 	$getSelection,
@@ -29,8 +27,9 @@ import {
 	Pilcrow,
 	Quote,
 } from 'lucide-react';
+import { ReactBlockDefinition } from '../types';
 
-export const baseBlocks: BlockDefinition[] = [
+export const baseBlocks: ReactBlockDefinition[] = [
 	{
 		id: 'paragraph',
 		title: 'Paragraph',

@@ -10,7 +10,7 @@ export type BlockCategory =
 	| 'alignment'
 	| 'advanced';
 
-export type BlockDefinition = {
+export type ReactBlockDefinition = {
 	id: string;
 	title: string;
 	icon?: JSX.Element;

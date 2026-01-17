@@ -35,7 +35,7 @@ function InkBlocksEditorView(props: InkBlocksEditorViewProps) {
 	};
 
 	const editorPlaceholder =
-		props.placeholder ?? "Enter text or type '/' for ";
+		props.placeholder ?? "Enter some text or type '/' for commands";
 
 	return (
 		<LexicalExtensionComposer
