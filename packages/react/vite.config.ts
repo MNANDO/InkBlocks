@@ -34,7 +34,7 @@ export default defineConfig((conf) => ({
 				if (
 					Object.keys({
 						...pkg.dependencies,
-						...((pkg as any).peerDependencies || {}),
+						...(pkg.peerDependencies || {}),
 						...pkg.devDependencies,
 					}).includes(source)
 				) {

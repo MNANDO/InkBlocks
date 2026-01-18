@@ -61,3 +61,93 @@
     display: inline-block;
     pointer-events: none;
 }
+
+/* With block handle modifier */
+.ib-editor-shell--with-block-handle .ib-editor-input {
+    margin-left: 48px;
+}
+
+.ib-editor-shell--with-block-handle .ib-editor-placeholder {
+    left: 58px;
+}
+
+/* Draggable Block Plugin */
+.ib-draggable-block-menu {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    border-radius: 4px;
+    padding: 2px 1px;
+    opacity: 0;
+    position: absolute;
+    left: 0;
+    top: 0;
+    will-change: transform;
+}
+
+.ib-draggable-block-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    opacity: 0.3;
+    border-radius: 4px;
+}
+
+.ib-draggable-block-menu:hover .ib-draggable-block-button {
+    opacity: 0.6;
+}
+
+.ib-draggable-block-button:hover {
+    opacity: 1 !important;
+    background-color: #e0e0e0;
+}
+
+.ib-draggable-block-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    opacity: 0.3;
+    cursor: grab;
+    border-radius: 4px;
+}
+
+.ib-draggable-block-menu:hover .ib-draggable-block-icon {
+    opacity: 0.6;
+}
+
+.ib-draggable-block-icon:hover {
+    opacity: 1 !important;
+    background-color: #e0e0e0;
+}
+
+.ib-draggable-block-icon:active {
+    cursor: grabbing;
+}
+
+.ib-block-picker-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 999;
+}
+
+.ib-draggable-block-target-line {
+    pointer-events: none;
+    background: deepskyblue;
+    height: 4px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    will-change: transform;
+}

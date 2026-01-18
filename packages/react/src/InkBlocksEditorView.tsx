@@ -5,6 +5,7 @@ import { LexicalErrorBoundary } from '@lexical/react/LexicalErrorBoundary';
 import { LexicalExtensionComposer } from '@lexical/react/LexicalExtensionComposer';
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
 import FloatingToolbarPlugin from './plugins/FloatingToolbarPlugin';
+import DraggableBlockPlugin from './plugins/DraggableBlockPlugin';
 import { useState } from 'react';
 import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
 import { EditorState, LexicalEditor } from 'lexical';
@@ -15,15 +16,16 @@ export type InkBlocksEditorViewProps = {
 	onChange?: (
 		editorState: EditorState,
 		editor: LexicalEditor,
-		tags: Set<string>
+		tags: Set<string>,
 	) => void;
 	showFloatingToolbar?: boolean;
+	showBlockHandle?: boolean;
 	placeholder?: string;
 	className?: string;
 };
 
 function InkBlocksEditorView(props: InkBlocksEditorViewProps) {
-	const { className, showFloatingToolbar = true, onChange } = props;
+	const { className, showFloatingToolbar = true, showBlockHandle = true, onChange } = props;
 
 	const [floatingAnchorElem, setFloatingAnchorElem] =
 		useState<HTMLDivElement | null>(null);
@@ -42,7 +44,7 @@ function InkBlocksEditorView(props: InkBlocksEditorViewProps) {
 			extension={props.editor.lexicalExtension}
 			contentEditable={null}
 		>
-			<div className={`ib-editor-shell ${className}`}>
+			<div className={`ib-editor-shell ${showBlockHandle ? 'ib-editor-shell--with-block-handle' : ''} ${className ?? ''}`}>
 				<div className="ib-editor-container">
 					<RichTextPlugin
 						contentEditable={
@@ -62,6 +64,12 @@ function InkBlocksEditorView(props: InkBlocksEditorViewProps) {
 					{floatingAnchorElem && showFloatingToolbar && (
 						<FloatingToolbarPlugin
 							anchorElem={floatingAnchorElem}
+						/>
+					)}
+					{floatingAnchorElem && showBlockHandle && (
+						<DraggableBlockPlugin
+							anchorElem={floatingAnchorElem}
+							blocks={props.editor.blocks}
 						/>
 					)}
 					<OnChangePlugin onChange={onChange} />

@@ -1,10 +1,10 @@
 import { MenuOption } from '@lexical/react/LexicalTypeaheadMenuPlugin';
-import { BlockDefinition } from '../blocks/types';
+import { ReactBlockDefinition } from '../types';
 
 export class BlockPickerOption extends MenuOption {
-	readonly block: BlockDefinition;
+	readonly block: ReactBlockDefinition;
 
-	constructor(block: BlockDefinition) {
+	constructor(block: ReactBlockDefinition) {
 		super(block.title);
 		this.block = block;
 	}

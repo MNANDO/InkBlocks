@@ -13,17 +13,13 @@ import useModal from '../hooks/useModal';
 import ModalHost from '../components/ModalHost';
 import { BlockPickerOption } from './BlockPickerOption';
 import { BlockPickerMenuItem } from '../components/BlockPickerMenuItem';
-import { BlockDefinition } from '../blocks/types';
+import { ReactBlockDefinition } from '../types';
 import styles from './BlockPickerPlugin.module.css';
 
 export type ShowModal = ReturnType<typeof useModal>['showModal'];
 
-export function getBaseOptions(blocks: BlockDefinition[]): BlockPickerOption[] {
-	return blocks.map((block) => new BlockPickerOption(block));
-}
-
 type BlockPickerPluginProps = {
-	blocks: BlockDefinition[];
+	blocks: ReactBlockDefinition[];
 };
 
 export default function BlockPickerPlugin({
@@ -31,7 +27,7 @@ export default function BlockPickerPlugin({
 }: BlockPickerPluginProps): JSX.Element {
 	const [editor] = useLexicalComposerContext();
 
-	const { modalState, showModal, closeModal } = useModal();
+	const { modalState, closeModal } = useModal();
 
 	const [queryString, setQueryString] = useState<string | null>(null);
 
@@ -39,6 +35,12 @@ export default function BlockPickerPlugin({
 		allowWhitespace: true,
 		minLength: 0,
 	});
+
+	function getBaseOptions(
+		blocks: ReactBlockDefinition[]
+	): BlockPickerOption[] {
+		return blocks.map((block) => new BlockPickerOption(block));
+	}
 
 	const options = useMemo(() => {
 		const baseOptions = getBaseOptions(blocks);
