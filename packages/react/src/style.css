@@ -72,7 +72,7 @@
 }
 
 /* Draggable Block Plugin */
-.ib-draggable-block-menu {
+.ib-block-control-menu {
     display: flex;
     align-items: center;
     gap: 2px;
@@ -85,7 +85,7 @@
     will-change: transform;
 }
 
-.ib-draggable-block-button {
+.ib-block-control-button {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -99,16 +99,16 @@
     border-radius: 4px;
 }
 
-.ib-draggable-block-menu:hover .ib-draggable-block-button {
+.ib-block-control-menu:hover .ib-block-control-button {
     opacity: 0.6;
 }
 
-.ib-draggable-block-button:hover {
+.ib-block-control-button:hover {
     opacity: 1 !important;
     background-color: #e0e0e0;
 }
 
-.ib-draggable-block-icon {
+.ib-block-control-icon {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -119,16 +119,16 @@
     border-radius: 4px;
 }
 
-.ib-draggable-block-menu:hover .ib-draggable-block-icon {
+.ib-block-control-menu:hover .ib-block-control-icon {
     opacity: 0.6;
 }
 
-.ib-draggable-block-icon:hover {
+.ib-block-control-icon:hover {
     opacity: 1 !important;
     background-color: #e0e0e0;
 }
 
-.ib-draggable-block-icon:active {
+.ib-block-control-icon:active {
     cursor: grabbing;
 }
 
@@ -141,7 +141,7 @@
     z-index: 999;
 }
 
-.ib-draggable-block-target-line {
+.ib-block-control-target-line {
     pointer-events: none;
     background: deepskyblue;
     height: 4px;

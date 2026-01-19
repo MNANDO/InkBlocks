@@ -47,12 +47,12 @@ export default function FloatingToolbar({
 			) {
 				const elementUnderMouse = document.elementFromPoint(
 					e.clientX,
-					e.clientY
+					e.clientY,
 				);
 				if (
 					elementUnderMouse &&
 					!popupCharStylesEditorRef.current.contains(
-						elementUnderMouse
+						elementUnderMouse,
 					)
 				) {
 					popupCharStylesEditorRef.current.style.pointerEvents =
@@ -136,8 +136,8 @@ export default function FloatingToolbar({
 					$updateTextFormatFloatingToolbar();
 					return false;
 				},
-				COMMAND_PRIORITY_LOW
-			)
+				COMMAND_PRIORITY_LOW,
+			),
 		);
 	}, [editor, $updateTextFormatFloatingToolbar]);
 
@@ -165,7 +165,7 @@ export default function FloatingToolbar({
 						onClick={() =>
 							editor.dispatchCommand(
 								FORMAT_TEXT_COMMAND,
-								'italic'
+								'italic',
 							)
 						}
 					>
@@ -180,7 +180,7 @@ export default function FloatingToolbar({
 						onClick={() =>
 							editor.dispatchCommand(
 								FORMAT_TEXT_COMMAND,
-								'underline'
+								'underline',
 							)
 						}
 					>
@@ -195,7 +195,7 @@ export default function FloatingToolbar({
 						onClick={() =>
 							editor.dispatchCommand(
 								FORMAT_TEXT_COMMAND,
-								'strikethrough'
+								'strikethrough',
 							)
 						}
 					>

@@ -12,7 +12,10 @@
   "dependencies": {
     "@inkblocks/core": "workspace:*",
     "@inkblocks/react": "workspace:*",
-    "@tailwindcss/vite": "^4.1.18"
+    "@lexical/react": "^0.39.0",
+    "@tailwindcss/vite": "^4.1.18",
+    "lexical": "^0.39.0",
+    "lucide-react": "^0.469.0"
   },
   "peerDependencies": {
     "react": "^19.2.0",
