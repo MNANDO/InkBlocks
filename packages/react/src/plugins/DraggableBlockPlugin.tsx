@@ -141,16 +141,21 @@ export default function DraggableBlockPlugin({
 						}}
 					>
 						<ul className={styles.list}>
-							{options.map((option, i) => (
-								<BlockPickerMenuItem
-									key={option.key}
-									index={i}
-									isSelected={selectedIndex === i}
-									onClick={() => handleSelectOption(option)}
-									onMouseEnter={() => setSelectedIndex(i)}
-									option={option}
-								/>
-							))}
+							{options.map((option, i) => {
+								const { block, setRefElement } = option;
+								return (
+									<BlockPickerMenuItem
+										key={block.id}
+										index={i}
+										isSelected={selectedIndex === i}
+										onClick={() => handleSelectOption(option)}
+										onMouseEnter={() => setSelectedIndex(i)}
+										setRefElement={setRefElement}
+										icon={block.icon}
+										title={block.title}
+									/>
+								);
+							})}
 						</ul>
 					</div>
 				</>,

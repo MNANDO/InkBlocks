@@ -98,8 +98,11 @@ export default function BlockPickerPlugin({
 						? ReactDOM.createPortal(
 								<div className={styles.menu}>
 									<ul className={styles.list}>
-										{options.map((option, i: number) => (
+										{options.map((option, i: number) => {
+										const { block, setRefElement } = option;
+										return (
 											<BlockPickerMenuItem
+												key={block.id}
 												index={i}
 												isSelected={selectedIndex === i}
 												onClick={() => {
@@ -111,10 +114,12 @@ export default function BlockPickerPlugin({
 												onMouseEnter={() => {
 													setHighlightedIndex(i);
 												}}
-												key={option.key}
-												option={option}
+												setRefElement={setRefElement}
+												icon={block.icon}
+												title={block.title}
 											/>
-										))}
+										);
+									})}
 									</ul>
 								</div>,
 								anchorElementRef.current

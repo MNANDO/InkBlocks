@@ -1,35 +1,38 @@
+import { ReactNode } from 'react';
 import styles from './BlockPickerMenuItem.module.css';
-import { BlockPickerOption } from '../plugins/BlockPickerOption';
 
 export function BlockPickerMenuItem({
 	index,
 	isSelected,
 	onClick,
 	onMouseEnter,
-	option,
+	setRefElement,
+	icon,
+	title,
 }: {
 	index: number;
 	isSelected: boolean;
 	onClick: () => void;
 	onMouseEnter: () => void;
-	option: BlockPickerOption;
+	setRefElement: (element: HTMLElement | null) => void;
+	icon: ReactNode;
+	title: string;
 }) {
 	const className = isSelected ? styles.itemSelected : styles.item;
 
 	return (
 		<li
-			key={option.key}
 			tabIndex={-1}
 			className={className}
-			ref={option.setRefElement}
+			ref={setRefElement}
 			role="option"
 			aria-selected={isSelected}
 			id={'typeahead-item-' + index}
 			onMouseEnter={onMouseEnter}
 			onClick={onClick}
 		>
-			<span className={styles.icon}>{option.block.icon}</span>
-			<span className={styles.title}>{option.block.title}</span>
+			<span className={styles.icon}>{icon}</span>
+			<span className={styles.title}>{title}</span>
 		</li>
 	);
 }
