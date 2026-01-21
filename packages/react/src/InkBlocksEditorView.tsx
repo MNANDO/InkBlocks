@@ -82,6 +82,10 @@ function InkBlocksEditorView(props: InkBlocksEditorViewProps) {
 							blocks={props.editor.blocks}
 						/>
 					)}
+					{/* Render generated plugins from custom blocks */}
+					{props.editor.generatedPlugins.map((Plugin, index) => (
+						<Plugin key={`generated-plugin-${index}`} />
+					))}
 					{children}
 					<OnChangePlugin onChange={onChange} />
 				</div>

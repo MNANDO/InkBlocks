@@ -1,4 +1,4 @@
-import type { JSX } from 'react';
+import type { ReactNode } from 'react';
 import type { LexicalEditor } from 'lexical';
 
 export type BlockCategory =
@@ -13,7 +13,7 @@ export type BlockCategory =
 export type ReactBlockDefinition = {
 	id: string;
 	title: string;
-	icon?: JSX.Element;
+	icon?: ReactNode;
 	keywords: readonly string[];
 	keyboardShortcut?: string;
 	category: BlockCategory;

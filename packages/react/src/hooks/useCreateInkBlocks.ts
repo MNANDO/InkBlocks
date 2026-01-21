@@ -1,13 +1,14 @@
 import { useState } from 'react';
-import { Klass, LexicalNode } from 'lexical';
+import type { EditorThemeClasses } from 'lexical';
 import InkBlocksReactEditor from '../InkBlocksReactEditor';
-import { ReactBlockDefinition } from '../types';
+import type { ReactBlockConfig } from '../api/types';
 
 export interface UseCreateInkBlocksOptions {
-	/** Custom blocks to add to the block picker */
-	blocks?: ReactBlockDefinition[];
-	/** Custom Lexical nodes to register */
-	nodes?: Array<Klass<LexicalNode>>;
+	/** Custom blocks defined with defineBlock() and React render functions */
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	blocks?: Array<ReactBlockConfig<any>>;
+	/** Custom theme to extend or override default InkBlocks theme */
+	theme?: EditorThemeClasses;
 	/** Replace default blocks entirely (default: false) */
 	replaceDefaultBlocks?: boolean;
 }
