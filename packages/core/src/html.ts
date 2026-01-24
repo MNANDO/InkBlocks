@@ -1,6 +1,6 @@
 import { createEditor, Klass, LexicalNode } from 'lexical';
 import { $generateHtmlFromNodes } from '@lexical/html';
-import { InkBlocksNodes } from './nodes/InkBlocksNodes';
+import { InkBlocksBaseNodes } from './nodes/InkBlocksBaseNodes';
 
 /**
  * Creates a headless Lexical editor for HTML serialization.
@@ -23,7 +23,7 @@ export function createHeadlessEditor(
 	customNodes: Array<Klass<LexicalNode>> = [],
 ) {
 	return createEditor({
-		nodes: [...InkBlocksNodes, ...customNodes],
+		nodes: [...InkBlocksBaseNodes, ...customNodes],
 		onError: (error) => {
 			console.error('InkBlocks headless editor error:', error);
 		},

@@ -1,6 +1,7 @@
 import { InkBlocksEditorView, useCreateInkBlocks } from '@inkblocks/react';
 import type { ReactBlockConfig } from '@inkblocks/react';
 import { MessageCircle, Image } from 'lucide-react';
+import { useRef } from 'react';
 import { calloutBlock, type CalloutData, type CalloutType } from './blocks/callout';
 import { imageBlock, type ImageData } from './blocks/image';
 
@@ -11,32 +12,109 @@ const styles: Record<CalloutType, { bg: string; border: string; icon: string }> 
 	error: { bg: '#ffebee', border: '#f44336', icon: '❌' },
 };
 
-const imageReactBlock: ReactBlockConfig<ImageData> = {
-	block: imageBlock,
-	title: 'Image',
-	icon: <Image size={18} />,
-	keywords: ['image', 'picture', 'photo', 'img'],
-	category: 'advanced',
-	render: ({ data, onChange, isSelected }) => {
-		return (
+function ImageBlockRenderer({
+	data,
+	onChange,
+	isSelected,
+}: {
+	data: ImageData;
+	onChange: (newData: Partial<ImageData>) => void;
+	isSelected: boolean;
+}) {
+	const containerRef = useRef<HTMLDivElement>(null);
+
+	const handleResizeStart = (e: React.MouseEvent, side: 'left' | 'right') => {
+		e.preventDefault();
+		e.stopPropagation();
+
+		const container = containerRef.current;
+		if (!container) return;
+
+		const containerWidth = container.offsetWidth;
+		const startX = e.clientX;
+		const startWidth = data.width;
+
+		const handleMouseMove = (moveEvent: MouseEvent) => {
+			const deltaX = moveEvent.clientX - startX;
+			const deltaPercent = (deltaX / containerWidth) * 100;
+
+			let newWidth: number;
+			if (side === 'right') {
+				newWidth = startWidth + deltaPercent;
+			} else {
+				newWidth = startWidth - deltaPercent;
+			}
+
+			newWidth = Math.max(10, Math.min(100, newWidth));
+			onChange({ width: Math.round(newWidth) });
+		};
+
+		const handleMouseUp = () => {
+			document.removeEventListener('mousemove', handleMouseMove);
+			document.removeEventListener('mouseup', handleMouseUp);
+		};
+
+		document.addEventListener('mousemove', handleMouseMove);
+		document.addEventListener('mouseup', handleMouseUp);
+	};
+
+	const resizeHandleStyle: React.CSSProperties = {
+		position: 'absolute',
+		top: '50%',
+		transform: 'translateY(-50%)',
+		width: '12px',
+		height: '48px',
+		backgroundColor: '#2196f3',
+		borderRadius: '4px',
+		cursor: 'ew-resize',
+		zIndex: 10,
+	};
+
+	return (
+		<div ref={containerRef}>
 			<figure
 				style={{
 					margin: '8px 0',
-					padding: '8px',
+					padding: '8px 20px',
 					borderRadius: '4px',
 					outline: isSelected ? '2px solid #2196f3' : '1px dashed #ccc',
 					textAlign: 'center',
+					overflow: 'visible',
 				}}
 			>
 				{data.src ? (
-					<img
-						src={data.src}
-						alt={data.alt}
+					<div
 						style={{
-							maxWidth: '100%',
-							borderRadius: '4px',
+							position: 'relative',
+							display: 'inline-block',
+							width: `${data.width}%`,
+							overflow: 'visible',
 						}}
-					/>
+					>
+						<img
+							src={data.src}
+							alt={data.alt}
+							style={{
+								width: '100%',
+								borderRadius: '4px',
+								display: 'block',
+							}}
+						/>
+						{isSelected && (
+							<>
+								<div
+									style={{ ...resizeHandleStyle, left: '-16px' }}
+									onMouseDown={(e) => handleResizeStart(e, 'left')}
+									title="Drag to resize"
+								/>
+								<div
+									style={{ ...resizeHandleStyle, right: '-16px' }}
+									onMouseDown={(e) => handleResizeStart(e, 'right')}
+									title="Drag to resize"
+								/>
+							</>
+						)}
+					</div>
 				) : (
 					<div
 						style={{
@@ -95,8 +173,17 @@ const imageReactBlock: ReactBlockConfig<ImageData> = {
 					</figcaption>
 				)}
 			</figure>
-		);
-	},
+		</div>
+	);
+}
+
+const imageReactBlock: ReactBlockConfig<ImageData> = {
+	block: imageBlock,
+	title: 'Image',
+	icon: <Image size={18} />,
+	keywords: ['image', 'picture', 'photo', 'img'],
+	category: 'advanced',
+	render: (props) => <ImageBlockRenderer {...props} />,
 };
 
 const calloutReactBlock: ReactBlockConfig<CalloutData> = {
@@ -105,11 +192,13 @@ const calloutReactBlock: ReactBlockConfig<CalloutData> = {
 	icon: <MessageCircle size={18} />,
 	keywords: ['callout', 'info', 'warning', 'note', 'alert'],
 	category: 'advanced',
-	render: ({ data, onChange, isSelected }) => {
+	render: ({ data, onChange, isSelected, theme }) => {
 		const style = styles[data.calloutType];
+		const calloutTheme = theme.callout as Record<string, string> | undefined;
 
 		return (
 			<div
+				className={calloutTheme?.[data.calloutType]}
 				style={{
 					backgroundColor: style.bg,
 					borderLeft: `4px solid ${style.border}`,
@@ -159,6 +248,14 @@ const calloutReactBlock: ReactBlockConfig<CalloutData> = {
 function App() {
 	const editor = useCreateInkBlocks({
 		blocks: [imageReactBlock, calloutReactBlock],
+		theme: {
+			callout: {
+				info: 'custom-callout-info',
+				warning: 'custom-callout-warning',
+				success: 'custom-callout-success',
+				error: 'custom-callout-error',
+			},
+		},
 	});
 
 	return (

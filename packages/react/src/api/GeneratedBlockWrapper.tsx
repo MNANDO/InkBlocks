@@ -13,11 +13,12 @@ type Props<TData extends Record<string, unknown>> = {
 
 export function GeneratedBlockWrapper<TData extends Record<string, unknown>>({
 	nodeKey,
-	data,
+	data: initialData,
 	render: Render,
 }: Props<TData>): ReactElement {
 	const [editor] = useLexicalComposerContext();
 	const [isSelected, setIsSelected] = useState(false);
+	const [data, setData] = useState<TData>(initialData);
 
 	useEffect(() => {
 		return editor.registerUpdateListener(({ editorState }) => {
@@ -27,6 +28,13 @@ export function GeneratedBlockWrapper<TData extends Record<string, unknown>>({
 					setIsSelected(selection.has(nodeKey));
 				} else {
 					setIsSelected(false);
+				}
+
+				// Read updated data from the node
+				const node = $getNodeByKey(nodeKey);
+				if (node && 'getData' in node) {
+					const nodeData = (node as { getData: () => TData }).getData();
+					setData(nodeData);
 				}
 			});
 		});

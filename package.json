@@ -5,7 +5,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev:basic": "nx run basic:dev",
+    "dev:playground": "nx run playground:dev",
     "build": "nx run-many --target=build",
     "build:clean": "pnpm run clean && pnpm run build",
     "clean": "nx run-many --target=clean",

@@ -5,7 +5,7 @@ export { createInkBlocksEditor } from './createInkBlocksEditor';
 export { InkBlocksCoreExtension } from './InkBlocksCoreExtension';
 
 // Nodes
-export { InkBlocksNodes } from './nodes/InkBlocksNodes';
+export { InkBlocksBaseNodes } from './nodes/InkBlocksBaseNodes';
 
 // HTML serialization
 export { createHeadlessEditor, serializeToHTML } from './html';
@@ -17,4 +17,11 @@ export {
 	buildDefaultData,
 	GeneratedBlockNode,
 } from './api/createNodeFromBlock';
-export type { BlockSchema, BlockConfig, BlockDefinition } from './api/types';
+export type {
+	BlockSchema,
+	BlockConfig,
+	BlockDefinition,
+	ContainerElement,
+	ContainerConfig,
+	ExportConfig,
+} from './api/types';

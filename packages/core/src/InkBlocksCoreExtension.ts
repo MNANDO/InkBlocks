@@ -4,11 +4,11 @@ import {
 } from '@lexical/extension';
 import { defineExtension } from 'lexical';
 import { CheckListExtension, ListExtension } from '@lexical/list';
-import { InkBlocksNodes } from './nodes/InkBlocksNodes';
+import { InkBlocksBaseNodes } from './nodes/InkBlocksBaseNodes';
 
 export const InkBlocksCoreExtension = defineExtension({
 	name: 'InkBlocksCore',
-	nodes: InkBlocksNodes,
+	nodes: InkBlocksBaseNodes,
 	dependencies: [
 		HorizontalRuleExtension,
 		ListExtension,

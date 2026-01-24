@@ -2,13 +2,19 @@ import {
 	DecoratorNode,
 	type DOMExportOutput,
 	type EditorConfig,
-	type LexicalEditor,
+	type EditorThemeClasses,
 	type LexicalNode,
 	type NodeKey,
 	type SerializedLexicalNode,
 	type Spread,
 } from 'lexical';
-import type { BlockConfig, BlockDefinition } from './types';
+import type {
+	BlockConfig,
+	BlockDefinition,
+	ContainerConfig,
+	ContainerElement,
+	ExportConfig,
+} from './types';
 
 export type SerializedBlockNode<TData> = Spread<
 	{
@@ -16,6 +22,117 @@ export type SerializedBlockNode<TData> = Spread<
 	},
 	SerializedLexicalNode
 >;
+
+// Helper functions to convert declarative config to Lexical DOM methods
+
+function normalizeContainer<TData>(
+	cfg: ContainerElement | ContainerConfig<TData> | undefined,
+): ContainerConfig<TData> {
+	if (!cfg) return { element: 'div' };
+	if (typeof cfg === 'string') return { element: cfg };
+	return { element: 'div', ...cfg };
+}
+
+function getThemeValue(
+	theme: EditorThemeClasses,
+	key: string,
+): string | undefined {
+	const value = (theme as Record<string, unknown>)[key];
+	return typeof value === 'string' ? value : undefined;
+}
+
+function resolveClassName<TData>(
+	className: string | ((data: TData) => string) | undefined,
+	data: TData,
+): string | undefined {
+	if (!className) return undefined;
+	return typeof className === 'function' ? className(data) : className;
+}
+
+function resolveDataAttributes<TData>(
+	attrs:
+		| Record<string, string>
+		| ((data: TData) => Record<string, string>)
+		| undefined,
+	data: TData,
+): Record<string, string> {
+	if (!attrs) return {};
+	return typeof attrs === 'function' ? attrs(data) : attrs;
+}
+
+function buildCreateDOM<TData>(
+	container: ContainerConfig<TData>,
+): (data: TData, config: BlockConfig) => HTMLElement {
+	return (data, config) => {
+		const el = document.createElement(container.element ?? 'div');
+
+		const cls = resolveClassName(container.className, data);
+		const themeClass = container.themeKey
+			? getThemeValue(config.theme, container.themeKey)
+			: undefined;
+
+		const combinedClass = [cls, themeClass].filter(Boolean).join(' ');
+		if (combinedClass) {
+			el.className = combinedClass;
+		}
+
+		const attrs = resolveDataAttributes(container.dataAttributes, data);
+		for (const [k, v] of Object.entries(attrs)) {
+			el.setAttribute(`data-${k}`, v);
+		}
+
+		return el;
+	};
+}
+
+function buildExportDOM<TData>(
+	exportCfg: ExportConfig<TData> | undefined,
+	container: ContainerConfig<TData>,
+): (data: TData) => { element: HTMLElement } {
+	return (data) => {
+		const el = document.createElement(
+			exportCfg?.element ?? container.element ?? 'div',
+		);
+
+		// Use export className if provided, otherwise fall back to container className
+		const cls =
+			resolveClassName(exportCfg?.className, data) ??
+			resolveClassName(container.className, data);
+		if (cls) {
+			el.className = cls;
+		}
+
+		// Merge data attributes from both configs
+		const containerAttrs = resolveDataAttributes(
+			container.dataAttributes,
+			data,
+		);
+		const exportAttrs = resolveDataAttributes(
+			exportCfg?.dataAttributes,
+			data,
+		);
+		const attrs = { ...containerAttrs, ...exportAttrs };
+		for (const [k, v] of Object.entries(attrs)) {
+			el.setAttribute(`data-${k}`, v);
+		}
+
+		// Render content if provided
+		if (exportCfg?.content) {
+			const content = exportCfg.content(data);
+			if (typeof content === 'string') {
+				el.innerHTML = content;
+			} else if (Array.isArray(content)) {
+				for (const child of content) {
+					el.appendChild(child);
+				}
+			} else {
+				el.appendChild(content);
+			}
+		}
+
+		return { element: el };
+	};
+}
 
 // Base class with getData/setData methods
 export abstract class GeneratedBlockNode<
@@ -55,7 +172,9 @@ export function createNodeFromBlock<TData extends Record<string, unknown>>(
 			return block.id;
 		}
 
-		static clone(node: GeneratedBlockNode<TData>): GeneratedBlockNode<TData> {
+		static clone(
+			node: GeneratedBlockNode<TData>,
+		): GeneratedBlockNode<TData> {
 			return new this(node.__data, node.__key);
 		}
 
@@ -63,31 +182,17 @@ export function createNodeFromBlock<TData extends Record<string, unknown>>(
 			const blockConfig: BlockConfig = {
 				theme: config.theme,
 			};
-			return block.createDOM(this.__data, blockConfig);
+			const container = normalizeContainer(block.container);
+			return buildCreateDOM(container)(this.__data, blockConfig);
 		}
 
-		updateDOM(
-			prevNode: GeneratedBlockNode<TData>,
-			dom: HTMLElement,
-			config: EditorConfig,
-		): boolean {
-			if (block.updateDOM) {
-				const blockConfig: BlockConfig = {
-					theme: config.theme,
-				};
-				return block.updateDOM(prevNode.__data, this.__data, dom, blockConfig);
-			}
+		updateDOM(): boolean {
 			return false;
 		}
 
-		exportDOM(_editor: LexicalEditor): DOMExportOutput {
-			if (block.exportDOM) {
-				return block.exportDOM(this.__data);
-			}
-			const blockConfig: BlockConfig = {
-				theme: {},
-			};
-			return { element: block.createDOM(this.__data, blockConfig) };
+		exportDOM(): DOMExportOutput {
+			const container = normalizeContainer(block.container);
+			return buildExportDOM(block.export, container)(this.__data);
 		}
 
 		exportJSON(): SerializedBlockNode<TData> {
@@ -98,7 +203,9 @@ export function createNodeFromBlock<TData extends Record<string, unknown>>(
 			};
 		}
 
-		static importJSON(json: SerializedBlockNode<TData>): GeneratedBlockNode<TData> {
+		static importJSON(
+			json: SerializedBlockNode<TData>,
+		): GeneratedBlockNode<TData> {
 			return new this(json.data);
 		}
 	};
